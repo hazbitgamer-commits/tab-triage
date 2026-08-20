@@ -1,0 +1,271 @@
+:root {
+  color-scheme: light dark;
+  --bg: #fbfbfc;
+  --panel: #f3f4f6;
+  --text: #1c1e21;
+  --muted: #8a8f98;
+  --border: #e6e8eb;
+  --hover: #eef0f3;
+  --btn-bg: #ffffff;
+  --keep: #22a06b;
+  --stash: #d97e00;
+  --dump: #d64545;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1e1f24;
+    --panel: #26272d;
+    --text: #e8e9ec;
+    --muted: #8f929c;
+    --border: #33353c;
+    --hover: #2a2c33;
+    --btn-bg: #2a2c33;
+    --keep: #3ecf8e;
+    --stash: #f0a63a;
+    --dump: #f07373;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 380px;
+  max-height: 580px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+}
+
+.app-header {
+  display: flex;
+  align-items: baseline;
+  padding: 10px 12px 8px;
+}
+
+h1 {
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.2px;
+}
+
+.total {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+.undo-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 10px 8px;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  font-size: 12px;
+}
+
+.undo-bar span {
+  flex: 1 1 auto;
+}
+
+/* ------------------------------------------------------------- buckets -- */
+
+details.bucket {
+  border-top: 1px solid var(--border);
+}
+
+summary {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary:hover {
+  background: var(--hover);
+}
+
+.chev {
+  width: 10px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.chev::before {
+  content: "\25B8";
+  display: inline-block;
+  transition: transform 0.12s ease;
+}
+
+details[open] > summary .chev::before {
+  transform: rotate(90deg);
+}
+
+.dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot.keep { background: var(--keep); }
+.dot.stash { background: var(--stash); }
+.dot.dump { background: var(--dump); }
+
+.name {
+  font-size: 11.5px;
+  font-weight: 650;
+  letter-spacing: 0.6px;
+}
+
+.count {
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+summary .btn,
+.saved-header .btn:first-of-type {
+  margin-left: auto;
+}
+
+/* ------------------------------------------------------------- buttons -- */
+
+.btn {
+  font: inherit;
+  font-size: 11px;
+  padding: 2px 9px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--btn-bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--muted);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.btn.danger { color: var(--dump); }
+.btn.quiet { color: var(--muted); }
+
+/* ---------------------------------------------------------------- rows -- */
+
+ul.list {
+  list-style: none;
+  padding-bottom: 4px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px 4px 29px;
+  cursor: pointer;
+}
+
+.row:hover {
+  background: var(--hover);
+}
+
+.row .title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 12.5px;
+}
+
+.row .meta {
+  flex: 0 1 auto;
+  max-width: 45%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* The "why is this tab here" label: same size as the title, grey. */
+.row .why {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.chip {
+  flex: 0 0 auto;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+
+.empty {
+  padding: 3px 12px 8px 29px;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-style: italic;
+}
+
+/* --------------------------------------------------------------- saved -- */
+
+.saved {
+  border-top: 2px solid var(--border);
+  background: var(--panel);
+}
+
+.saved-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+}
+
+.saved-header .name {
+  color: var(--muted);
+}
+
+.saved .row {
+  padding-left: 12px;
+}
+
+.x {
+  flex: 0 0 auto;
+  border: none;
+  background: none;
+  padding: 0 2px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.x:hover {
+  color: var(--dump);
+}
